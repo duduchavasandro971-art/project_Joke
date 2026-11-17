@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Joke Collector</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>😂 Daily Joke Collector</h1>
+
+    <h2>Get a Random Joke</h2>
+
+    <form action="/get_joke" method="GET">
+
+        <select name="category">
+            <option value="Any">Any Category</option>
+            <option value="Programming">Programming</option>
+            <option value="Misc">Misc</option>
+            <option value="Pun">Pun</option>
+            <option value="Spooky">Spooky</option>
+            <option value="Christmas">Christmas</option>
+        </select>
+
+        <button type="submit">Get Joke</button>
+
+    </form>
+
+    {% if joke %}
+        <div class="joke-card">
+            <h3>{{ category }}</h3>
+            <p>{{ joke }}</p>
+        </div>
+    {% endif %}
+
+    <h2>📚 Joke History</h2>
+
+    {% if jokes %}
+        {% for item in jokes %}
+            <div class="history-card">
+                <h3>{{ item[1] }}</h3>
+                <p>{{ item[2] }}</p>
+                <small>{{ item[3] }}</small>
+
+                <a href="/delete/{{ item[0] }}">
+                    Delete
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No saved jokes yet.</p>
+    {% endif %}
+
+    <a href="/">Home</a>
+
+</div>
+
+</body>
+</html>
